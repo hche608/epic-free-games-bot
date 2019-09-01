@@ -1,0 +1,13 @@
+sudo: false
+language: java
+services:
+- docker
+cache:
+  directories:
+  - '$HOME/.m2/repository'
+  - '$HOME/.sonar'
+
+script: "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar \
+           -Dsonar.organization=hche608-github \
+           -Dsonar.host.url=https://sonarcloud.io \
+           -Dsonar.login=${sonar}"

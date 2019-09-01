@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>me.hax3.parent</groupId>
+        <artifactId>hax3-parent-java</artifactId>
+        <version>0.1</version>
+    </parent>
+
+    <groupId>me.hax3.epic</groupId>
+    <artifactId>free-games-bot-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+
+    <properties>
+        <skip.deployment>false</skip.deployment>
+    </properties>
+
+    <modules>
+        <module>free-games-bot</module>
+        <module>free-games-bot-api</module>
+        <module>free-games-bot-acceptance</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>mvn-repo</id>
+            <url>https://github.com/hche608/hax3-parent/raw/mvn-repo/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+</project>
