@@ -8,7 +8,7 @@
         <groupId>me.hax3.parent.spring</groupId>
         <artifactId>hax3-parent-acceptance</artifactId>
         <version>0.1</version>
-        <relativePath>../</relativePath>
+        <relativePath/>
     </parent>
 
     <groupId>me.hax3.epic</groupId>
@@ -24,6 +24,11 @@
             <groupId>me.hax3.epic</groupId>
             <artifactId>free-games-bot</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
         </dependency>
     </dependencies>
 

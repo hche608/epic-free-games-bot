@@ -10,8 +10,15 @@ import me.hax3.epic.factory.CredentialFactory;
 import me.hax3.epic.holder.EpicUserHolder;
 import me.hax3.epic.holder.GameListHolder;
 import me.hax3.epic.model.LoginType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class EpicFreeGameBotSteps {
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final CredentialFactory credentialFactory;
     private final EpicUserHolder userHolder;
@@ -43,8 +50,7 @@ public class EpicFreeGameBotSteps {
 
     @Then("the games are acquired")
     public void theGamesAreAcquired() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        assertThat(gameList.get().size(), is(2));
     }
 
     @And("There are not free games for this week")
@@ -55,7 +61,6 @@ public class EpicFreeGameBotSteps {
 
     @Then("do nothing")
     public void doNothing() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        log.info("You already have the game.");
     }
 }
