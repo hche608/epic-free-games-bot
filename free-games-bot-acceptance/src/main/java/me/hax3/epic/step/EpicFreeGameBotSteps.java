@@ -1,17 +1,33 @@
-package me.hax3.epic;
+package me.hax3.epic.step;
 
 import cucumber.api.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import me.hax3.epic.bot.EzyBot;
+import me.hax3.epic.factory.CredentialFactory;
+import me.hax3.epic.holder.EpicUserHolder;
+import me.hax3.epic.holder.GameListHolder;
+import me.hax3.epic.model.LoginType;
 
-public class EpicFreeGameBotStep {
+public class EpicFreeGameBotSteps {
+
+    private final CredentialFactory credentialFactory;
+    private final EpicUserHolder userHolder;
+    private final EzyBot ezyBot;
+    private final GameListHolder gameList;
+
+    public EpicFreeGameBotSteps(CredentialFactory credentialFactory, EpicUserHolder userHolder, EzyBot ezyBot, GameListHolder gameList) {
+        this.credentialFactory = credentialFactory;
+        this.userHolder = userHolder;
+        this.ezyBot = ezyBot;
+        this.gameList = gameList;
+    }
 
     @Given("^I have an epic account via \"([^\"]*)\"$")
-    public void iHaveAnEpicAccountVia(String loginMethod) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void iHaveAnEpicAccountVia(LoginType loginType) {
+        userHolder.set(credentialFactory.read(loginType));
     }
 
     @And("There are free games for this week")
@@ -22,8 +38,7 @@ public class EpicFreeGameBotStep {
 
     @When("I ran this epic free games bot")
     public void iRanThisEpicFreeGamesBot() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        gameList.set(ezyBot.getGames(userHolder.get()));
     }
 
     @Then("the games are acquired")

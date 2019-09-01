@@ -19,6 +19,14 @@
 
     <name>${project.artifactId}</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>me.hax3.epic</groupId>
+            <artifactId>free-games-bot</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <repositories>
         <repository>
             <id>mvn-repo</id>
