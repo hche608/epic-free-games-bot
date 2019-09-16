@@ -28,4 +28,14 @@
         <module>free-games-bot-acceptance</module>
     </modules>
 
+    <repositories>
+        <repository>
+            <id>mvn-repo</id>
+            <url>https://github.com/hche608/hax3-parent/raw/mvn-repo/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
 </project>
