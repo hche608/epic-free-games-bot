@@ -13,7 +13,7 @@ import me.hax3.epic.model.LoginType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
 public class EpicFreeGameBotSteps {
@@ -33,8 +33,8 @@ public class EpicFreeGameBotSteps {
     }
 
     @Given("^I have an epic account via \"([^\"]*)\"$")
-    public void iHaveAnEpicAccountVia(LoginType loginType) {
-        userHolder.set(credentialFactory.read(loginType));
+    public void iHaveAnEpicAccountVia(String loginType) {
+        userHolder.set(credentialFactory.read(LoginType.valueOf(loginType.toUpperCase())));
     }
 
     @And("There are free games for this week")
@@ -50,7 +50,7 @@ public class EpicFreeGameBotSteps {
 
     @Then("the games are acquired")
     public void theGamesAreAcquired() {
-        assertThat(gameList.get().size(), is(2));
+        assertThat(gameList.get().size(), greaterThan(0));
     }
 
     @And("There are not free games for this week")

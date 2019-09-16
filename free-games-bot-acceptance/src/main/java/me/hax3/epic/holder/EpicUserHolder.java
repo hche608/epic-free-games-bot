@@ -1,6 +1,6 @@
 package me.hax3.epic.holder;
 
-import me.hax3.acceptance.step.GenericHolder;
+import me.hax3.acceptance.steps.GenericHolder;
 import me.hax3.epic.model.EpicUser;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

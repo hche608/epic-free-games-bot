@@ -2,17 +2,15 @@ package me.hax3.epic.model;
 
 public class EpicUser {
 
+    private LoginType loginType;
+    private String username;
+    private String password;
+
     public EpicUser(LoginType loginType, String username, String password) {
         this.loginType = loginType;
         this.username = username;
         this.password = password;
     }
-
-    private LoginType loginType;
-
-    private String username;
-
-    private String password;
 
     public LoginType getLoginType() {
         return loginType;

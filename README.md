@@ -23,8 +23,8 @@ mvn package
 
 ## Run
 ```shell script
-export login.type=placeholder
-export username=placeholder
-export password=placeholder
+export login.type=<>
+export EPIC_USERNAME=placeholder
+export EPIC_PASSWORD=placeholder
 mvn verify -Dspring.profiles.active=local
 ```

@@ -46,7 +46,7 @@ public class EpicFreeGameBotStepsTest {
         given(credentialFactory.read(loginType)).willReturn(user);
 
         // When
-        steps.iHaveAnEpicAccountVia(loginType);
+        steps.iHaveAnEpicAccountVia(loginType.name());
 
         // Then
         then(userHolder).should().set(user);
