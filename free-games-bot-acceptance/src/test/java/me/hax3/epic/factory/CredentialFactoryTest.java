@@ -5,30 +5,39 @@ import me.hax3.epic.model.LoginType;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static shiver.me.timbers.data.random.RandomEnums.someEnum;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 
 public class CredentialFactoryTest {
 
 
-    private String username;
-    private String password;
+    private Map usernameMap;
+    private Map passwordMap;
     private CredentialFactory factory;
 
     @Before
     public void setUp() {
-        username = someString();
-        password = someString();
-        factory = new CredentialFactory(username, password);
+        usernameMap = mock(Map.class);
+        passwordMap = mock(Map.class);
+        factory = new CredentialFactory(usernameMap, passwordMap);
     }
 
     @Test
     public void Can_read_user_from_environment_variables() {
 
-        // Given
         final LoginType loginType = someEnum(LoginType.class);
+        final String username = someString();
+        final String password = someString();
+
+        // Given
+        given(usernameMap.get(loginType.name().toLowerCase())).willReturn(username);
+        given(passwordMap.get(loginType.name().toLowerCase())).willReturn(password);
 
         // When
         final EpicUser user = factory.read(loginType);

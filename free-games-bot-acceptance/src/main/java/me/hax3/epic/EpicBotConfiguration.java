@@ -1,6 +1,7 @@
 package me.hax3.epic;
 
 import me.hax3.epic.bot.EzyBot;
+import me.hax3.epic.page.CheckOutPage;
 import me.hax3.epic.page.GamePage;
 import me.hax3.epic.page.HomePage;
 import me.hax3.epic.page.LoginPage;
@@ -22,9 +23,12 @@ public class EpicBotConfiguration {
     @Autowired
     private GamePage gamePage;
 
+    @Autowired
+    private CheckOutPage checkOutPage;
+
     @Bean
     public EzyBot ezyBot() {
-        return new EzyBot(loginPage, homePage, gamePage);
+        return new EzyBot(loginPage, homePage, gamePage, checkOutPage);
     }
 
 }

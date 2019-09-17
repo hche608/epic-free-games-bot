@@ -4,9 +4,10 @@ import me.hax3.epic.model.GameStatus;
 import me.hax3.selenium.finders.Finders;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 @Component
 public class GamePage extends BasePage {
@@ -22,7 +23,7 @@ public class GamePage extends BasePage {
     }
 
     public GameStatus getStatus() {
-        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[text()='Free']")));
+        webDriverWait.until(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']")));
         final String discount = finders.findByText("span", "Free").getText();
         final String price = webDriver.findElement(By.xpath("//span[text()='Free']/preceding-sibling::s")).getText();
         final String owned = webDriver.findElement(By.xpath("//button//span[text()='Get' or text()='Owned']/../..")).getText();

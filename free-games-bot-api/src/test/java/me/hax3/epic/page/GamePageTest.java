@@ -47,7 +47,7 @@ public class GamePageTest {
         final String price = "$19.99";
 
         // Given
-        when(visibilityOfElementLocated(By.xpath("//span[text()='Free']"))).thenReturn(webDriver_ -> mock(WebElement.class));
+        when(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
         given(webDriver.getCurrentUrl()).willReturn("https://www.epicgames.com/store/en-US/product/conarium/home");
         given(finders.findByText("span", "Free")).willReturn(discountWebElement);
@@ -78,7 +78,7 @@ public class GamePageTest {
         final String price = "$19.99";
 
         // Given
-        when(visibilityOfElementLocated(By.xpath("//span[text()='Free']"))).thenReturn(webDriver_ -> mock(WebElement.class));
+        when(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
         given(webDriver.getCurrentUrl()).willReturn("https://www.epicgames.com/store/en-US/product/conarium/home");
         given(finders.findByText("span", "Free")).willReturn(discountWebElement);
@@ -109,7 +109,7 @@ public class GamePageTest {
         final String price = "$19.99";
 
         // Given
-        when(visibilityOfElementLocated(By.xpath("//span[text()='Free']"))).thenReturn(webDriver_ -> mock(WebElement.class));
+        when(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
         given(webDriver.getCurrentUrl()).willReturn("https://www.epicgames.com/store/en-US/product/conarium/home");
         given(finders.findByText("span", "Free")).willReturn(discountWebElement);

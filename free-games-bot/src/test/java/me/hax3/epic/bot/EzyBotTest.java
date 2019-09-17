@@ -2,6 +2,7 @@ package me.hax3.epic.bot;
 
 import me.hax3.epic.model.EpicUser;
 import me.hax3.epic.model.GameStatus;
+import me.hax3.epic.page.CheckOutPage;
 import me.hax3.epic.page.GamePage;
 import me.hax3.epic.page.HomePage;
 import me.hax3.epic.page.LoginPage;
@@ -22,6 +23,7 @@ public class EzyBotTest {
     private LoginPage loginPage;
     private HomePage homePage;
     private GamePage gamePage;
+    private CheckOutPage checkOutagePage;
     private EzyBot ezyBot;
 
     @Before
@@ -29,7 +31,8 @@ public class EzyBotTest {
         loginPage = mock(LoginPage.class);
         homePage = mock(HomePage.class);
         gamePage = mock(GamePage.class);
-        ezyBot = new EzyBot(loginPage, homePage, gamePage);
+        checkOutagePage = mock(CheckOutPage.class);
+        ezyBot = new EzyBot(loginPage, homePage, gamePage, checkOutagePage);
     }
 
     @Test
@@ -49,11 +52,11 @@ public class EzyBotTest {
         // Then
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
-        then(loginPage).should().enterLoginDetail(epicUser);
-        then(loginPage).should().clickLogin();
+        then(loginPage).should().loginWithDetail(epicUser);
         then(homePage).should().clickStoreFreeGames();
         then(gamePage).should().getStatus();
         then(gamePage).should().clickGet();
+        then(checkOutagePage).should().clickCheckout();
 
         assertThat(actual.size(), greaterThan(0));
     }
@@ -75,11 +78,11 @@ public class EzyBotTest {
         // Then
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
-        then(loginPage).should().enterLoginDetail(epicUser);
-        then(loginPage).should().clickLogin();
+        then(loginPage).should().loginWithDetail(epicUser);
         then(homePage).should().clickStoreFreeGames();
         then(gamePage).should().getStatus();
         then(gamePage).should(never()).clickGet();
+        then(checkOutagePage).shouldHaveZeroInteractions();
 
         assertThat(actual.size(), greaterThan(0));
     }
@@ -101,11 +104,11 @@ public class EzyBotTest {
         // Then
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
-        then(loginPage).should().enterLoginDetail(epicUser);
-        then(loginPage).should().clickLogin();
+        then(loginPage).should().loginWithDetail(epicUser);
         then(homePage).should().clickStoreFreeGames();
         then(gamePage).should().getStatus();
         then(gamePage).should(never()).clickGet();
+        then(checkOutagePage).shouldHaveZeroInteractions();
 
         assertThat(actual.size(), greaterThan(0));
     }

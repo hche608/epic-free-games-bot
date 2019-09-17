@@ -2,6 +2,7 @@ package me.hax3.epic.bot;
 
 import me.hax3.epic.model.EpicUser;
 import me.hax3.epic.model.GameStatus;
+import me.hax3.epic.page.CheckOutPage;
 import me.hax3.epic.page.GamePage;
 import me.hax3.epic.page.HomePage;
 import me.hax3.epic.page.LoginPage;
@@ -20,22 +21,24 @@ public class EzyBot {
     private final LoginPage loginPage;
     private final HomePage homePage;
     private final GamePage gamePage;
+    private final CheckOutPage checkOutPage;
 
-    public EzyBot(LoginPage loginPage, HomePage homePage, GamePage gamePage) {
+    public EzyBot(LoginPage loginPage, HomePage homePage, GamePage gamePage, CheckOutPage checkOutPage) {
         this.loginPage = loginPage;
         this.homePage = homePage;
         this.gamePage = gamePage;
+        this.checkOutPage = checkOutPage;
     }
 
     public List<String> getGames(EpicUser epicUser) {
         homePage.visit();
         homePage.clickSignIn();
-        loginPage.enterLoginDetail(epicUser);
-        loginPage.clickLogin();
+        loginPage.loginWithDetail(epicUser);
         homePage.clickStoreFreeGames();
         final GameStatus gameStatus = gamePage.getStatus();
         if (!gameStatus.isOwned() && gameStatus.isDiscount()) {
             gamePage.clickGet();
+            checkOutPage.clickCheckout();
         } else {
             log.info("{} is owned", gameStatus.getName());
         }
