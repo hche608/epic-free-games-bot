@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
 public class BasePage {
-
     private final WebDriver webDriver;
     private final WebDriverWait webDriverWait;
     private final Actions actions;
@@ -40,6 +39,8 @@ public class BasePage {
     }
 
     public void clickStore() {
-        webDriver.findElement(By.xpath("//a/p[text()='Store']")).click();
+        final By xpath = By.xpath("//a/p[text()='Store']");
+        webDriverWait.until(elementToBeClickable(xpath));
+        webDriver.findElement(xpath).click();
     }
 }

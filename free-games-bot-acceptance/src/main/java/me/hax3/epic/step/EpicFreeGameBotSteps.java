@@ -13,6 +13,8 @@ import me.hax3.epic.model.LoginType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
@@ -50,7 +52,9 @@ public class EpicFreeGameBotSteps {
 
     @Then("the games are acquired")
     public void theGamesAreAcquired() {
-        assertThat(gameList.get().size(), greaterThan(0));
+        final List<String> listOfGame = gameList.get();
+        assertThat(listOfGame.size(), greaterThan(0));
+        listOfGame.forEach(log::info);
     }
 
     @And("There are not free games for this week")

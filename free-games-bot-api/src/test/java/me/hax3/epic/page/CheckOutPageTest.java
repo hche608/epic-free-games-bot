@@ -37,13 +37,27 @@ public class CheckOutPageTest {
         final WebElement button = mock(WebElement.class);
 
         // Given
-        when(visibilityOfElementLocated(By.xpath("//button/span[text()='Checkout']"))).thenReturn(webDriver_ -> mock(WebElement.class));
-        given(webDriver.findElement(By.xpath("//button/span[text()='Checkout']/.."))).willReturn(button);
+        when(visibilityOfElementLocated(By.xpath("//button/span[text()='Place Order']"))).thenReturn(webDriver_ -> mock(WebElement.class));
+        given(webDriver.findElement(By.xpath("//button/span[text()='Place Order']/.."))).willReturn(button);
 
         // When
-        page.clickCheckout();
+        page.clickPlaceOrder();
 
         // Then
         then(button).should().click();
+    }
+
+    @Test
+    public void Can_click_close() {
+
+        // Given
+        final WebElement close = mock(WebElement.class);
+        given(webDriver.findElement(By.xpath("//div[contains(@class, 'order-summary-container')]//button[contains(@class, 'btn btn-close close')]"))).willReturn(close);
+
+        // When
+        page.close();
+
+        // Then
+        then(close).should().click();
     }
 }

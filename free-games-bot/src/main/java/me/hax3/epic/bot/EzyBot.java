@@ -2,6 +2,7 @@ package me.hax3.epic.bot;
 
 import me.hax3.epic.model.EpicUser;
 import me.hax3.epic.model.GameStatus;
+import me.hax3.epic.page.AfterPlaceOrderPage;
 import me.hax3.epic.page.CheckOutPage;
 import me.hax3.epic.page.GamePage;
 import me.hax3.epic.page.HomePage;
@@ -9,9 +10,8 @@ import me.hax3.epic.page.LoginPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static java.util.Arrays.asList;
 
 
 public class EzyBot {
@@ -22,12 +22,14 @@ public class EzyBot {
     private final HomePage homePage;
     private final GamePage gamePage;
     private final CheckOutPage checkOutPage;
+    private final AfterPlaceOrderPage afterPlaceOrderPage;
 
-    public EzyBot(LoginPage loginPage, HomePage homePage, GamePage gamePage, CheckOutPage checkOutPage) {
+    public EzyBot(LoginPage loginPage, HomePage homePage, GamePage gamePage, CheckOutPage checkOutPage, AfterPlaceOrderPage afterPlaceOrderPage) {
         this.loginPage = loginPage;
         this.homePage = homePage;
         this.gamePage = gamePage;
         this.checkOutPage = checkOutPage;
+        this.afterPlaceOrderPage = afterPlaceOrderPage;
     }
 
     public List<String> getGames(EpicUser epicUser) {
@@ -35,13 +37,31 @@ public class EzyBot {
         homePage.clickSignIn();
         loginPage.loginWithDetail(epicUser);
         homePage.clickStoreFreeGames();
+        final ArrayList<String> games = new ArrayList<>();
+        final int numberOfFreeGame = gamePage.getNumberOfFreeGame();
+        if (numberOfFreeGame > 1) {
+            for (int i = 0; i < numberOfFreeGame; i++) {
+                gamePage.clickFree(i);
+                games.add(getGame());
+                homePage.clickStore();
+                homePage.clickStoreFreeGames();
+            }
+        } else {
+            games.add(getGame());
+        }
+        return games;
+    }
+
+    private String getGame() {
+        gamePage.clickContinueIfItPresented();
         final GameStatus gameStatus = gamePage.getStatus();
         if (!gameStatus.isOwned() && gameStatus.isDiscount()) {
             gamePage.clickGet();
-            checkOutPage.clickCheckout();
+            checkOutPage.clickPlaceOrder();
+            afterPlaceOrderPage.waitForThankYouForBuying();
+            return gameStatus.getName();
         } else {
-            log.info("{} is owned", gameStatus.getName());
+            return gameStatus.getName() + " is owned.";
         }
-        return asList(gameStatus.getName());
     }
 }
