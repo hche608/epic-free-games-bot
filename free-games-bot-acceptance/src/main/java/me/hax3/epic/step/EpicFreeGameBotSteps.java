@@ -43,7 +43,7 @@ public class EpicFreeGameBotSteps {
 
     @Then("the games are acquired")
     public void theGamesAreAcquired() {
-        final List<java.lang.String> listOfGame = gameList.get();
+        final List<String> listOfGame = gameList.get();
         assertThat(listOfGame.size(), greaterThan(0));
         listOfGame.forEach(log::info);
     }

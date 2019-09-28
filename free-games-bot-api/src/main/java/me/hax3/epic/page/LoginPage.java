@@ -25,7 +25,7 @@ public class LoginPage extends BasePage {
 
     public void loginWithDetail(EpicUser epicUser) {
         webDriverWait.until(visibilityOfElementLocated(By.xpath("//form")));
-        final java.lang.String parent = webDriver.getWindowHandle();
+        final String parent = webDriver.getWindowHandle();
 
         if (epicUser.getLoginType().equals(LoginType.EPIC)) {
             webDriver.findElement(By.id("email")).sendKeys(epicUser.getUsername());
@@ -42,7 +42,7 @@ public class LoginPage extends BasePage {
         }
     }
 
-    private void switchWindowBack(java.lang.String parent) {
+    private void switchWindowBack(String parent) {
         webDriver.switchTo().window(parent);
     }
 
@@ -64,8 +64,8 @@ public class LoginPage extends BasePage {
         webDriver.findElement(By.xpath("//div[@id='buttons']/label/input")).click();
     }
 
-    private void switchToNewWindow(java.lang.String parent) {
-        final java.lang.String newWindow = webDriver.getWindowHandles()
+    private void switchToNewWindow(String parent) {
+        final String newWindow = webDriver.getWindowHandles()
             .stream()
             .filter(s -> !s.equalsIgnoreCase(parent))
             .findFirst()

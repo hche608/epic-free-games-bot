@@ -73,7 +73,7 @@ public class EpicFreeGameBotStepsTest {
     @Test
     public void Can_verify_games_are_purchased() {
 
-        final List<java.lang.String> games = asList(someString(), someString());
+        final List<String> games = asList(someString(), someString());
 
         // Given
         given(gameList.get()).willReturn(games);
