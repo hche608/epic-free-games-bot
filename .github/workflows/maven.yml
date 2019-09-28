@@ -18,8 +18,8 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn package --file pom.xml
-    - name: Echo the greeting's time
-        run: echo 'The time was ${{ steps.hello.outputs.time }}.'
+    - name: Echo hello world
+        run: echo hello world
     - uses: chrislennon/action-aws-cli@v1.1
         # All commands after this point have access to the AWS CLI
         - run: aws s3 ls
