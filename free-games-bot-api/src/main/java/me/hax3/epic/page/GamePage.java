@@ -1,7 +1,6 @@
 package me.hax3.epic.page;
 
 import me.hax3.epic.model.GameStatus;
-import me.hax3.selenium.finders.Finders;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -21,13 +20,11 @@ public class GamePage extends BasePage {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final WebDriver webDriver;
-    private final Finders finders;
     private final WebDriverWait webDriverWait;
 
-    public GamePage(WebDriver webDriver, Finders finders) {
+    public GamePage(WebDriver webDriver) {
         super(webDriver);
         this.webDriver = webDriver;
-        this.finders = finders;
         webDriverWait = new WebDriverWait(webDriver, 30);
     }
 
@@ -38,7 +35,7 @@ public class GamePage extends BasePage {
 
     public GameStatus getStatus() {
         webDriverWait.until(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']")));
-        final String discount = finders.findByText("span", "Free").getText();
+        final String discount = webDriver.findElement(By.xpath("//span[text()='Free']")).getText();
         final String price = webDriver.findElement(By.xpath("//span[text()='Free']/preceding-sibling::s")).getText();
         final String owned = webDriver.findElement(By.xpath("//button//span[text()='Get' or text()='Owned']/../..")).getText();
 

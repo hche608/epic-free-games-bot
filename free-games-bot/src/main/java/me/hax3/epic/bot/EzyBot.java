@@ -9,11 +9,12 @@ import me.hax3.epic.page.HomePage;
 import me.hax3.epic.page.LoginPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Service
 public class EzyBot {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -34,9 +35,13 @@ public class EzyBot {
 
     public List<String> getGames(EpicUser epicUser) {
         homePage.visit();
+        log.info("landed on homepage");
         homePage.clickSignIn();
+        log.info("clicked sign in");
         loginPage.loginWithDetail(epicUser);
+        log.info("logged in");
         homePage.clickStoreFreeGames();
+        log.info("looking for games");
         final ArrayList<String> games = new ArrayList<>();
         final int numberOfFreeGame = gamePage.getNumberOfFreeGame();
         if (numberOfFreeGame > 1) {

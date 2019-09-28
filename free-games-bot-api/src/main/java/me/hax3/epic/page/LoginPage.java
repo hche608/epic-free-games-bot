@@ -2,7 +2,6 @@ package me.hax3.epic.page;
 
 import me.hax3.epic.model.EpicUser;
 import me.hax3.epic.model.LoginType;
-import me.hax3.selenium.finders.Finders;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.WebDriver;
@@ -16,36 +15,34 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 public class LoginPage extends BasePage {
 
     private final WebDriver webDriver;
-    private final Finders finders;
     private final WebDriverWait webDriverWait;
 
-    public LoginPage(WebDriver webDriver, Finders finders) {
+    public LoginPage(WebDriver webDriver) {
         super(webDriver);
         this.webDriver = webDriver;
-        this.finders = finders;
         this.webDriverWait = new WebDriverWait(webDriver, 30);
     }
 
     public void loginWithDetail(EpicUser epicUser) {
         webDriverWait.until(visibilityOfElementLocated(By.xpath("//form")));
-        final String parent = webDriver.getWindowHandle();
+        final java.lang.String parent = webDriver.getWindowHandle();
 
         if (epicUser.getLoginType().equals(LoginType.EPIC)) {
-            finders.findById("email").sendKeys(epicUser.getUsername());
-            finders.findById("password").sendKeys(epicUser.getPassword());
+            webDriver.findElement(By.id("email")).sendKeys(epicUser.getUsername());
+            webDriver.findElement(By.id("password")).sendKeys(epicUser.getPassword());
             clickEpicLogin();
         } else if (epicUser.getLoginType().equals(LoginType.FACEBOOK)) {
-            finders.clickById("login-with-facebook");
+            webDriver.findElement(By.id("login-with-facebook")).click();
             switchToNewWindow(parent);
             webDriverWait.until(elementToBeClickable(By.xpath("//div[@id='buttons']/label/input")));
-            finders.findById("email").sendKeys(epicUser.getUsername());
-            finders.findById("pass").sendKeys(epicUser.getPassword());
+            webDriver.findElement(By.id("email")).sendKeys(epicUser.getUsername());
+            webDriver.findElement(By.id("pass")).sendKeys(epicUser.getPassword());
             clickFacebookLogin();
             switchWindowBack(parent);
         }
     }
 
-    private void switchWindowBack(String parent) {
+    private void switchWindowBack(java.lang.String parent) {
         webDriver.switchTo().window(parent);
     }
 
@@ -54,12 +51,12 @@ public class LoginPage extends BasePage {
     }
 
     public void clickRememberMe() {
-        finders.clickByText("label", "Remember Me");
+        webDriver.findElement(By.xpath("//label[text()='Remember Me']")).click();
     }
 
     public void clickEpicLogin() {
         webDriverWait.until(elementToBeClickable(By.id("login")));
-        finders.clickById("login");
+        webDriver.findElement(By.id("login")).click();
     }
 
     private void clickFacebookLogin() {
@@ -67,8 +64,8 @@ public class LoginPage extends BasePage {
         webDriver.findElement(By.xpath("//div[@id='buttons']/label/input")).click();
     }
 
-    private void switchToNewWindow(String parent) {
-        final String newWindow = webDriver.getWindowHandles()
+    private void switchToNewWindow(java.lang.String parent) {
+        final java.lang.String newWindow = webDriver.getWindowHandles()
             .stream()
             .filter(s -> !s.equalsIgnoreCase(parent))
             .findFirst()

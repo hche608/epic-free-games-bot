@@ -39,14 +39,14 @@ public class EpicFreeGameBotStepsTest {
     @Test
     public void Can_hold_epic_user() {
 
-        final LoginType loginType = someEnum(LoginType.class);
+        final LoginType loginMethod = someEnum(LoginType.class);
         final EpicUser user = mock(EpicUser.class);
 
         // Given
-        given(credentialFactory.read(loginType)).willReturn(user);
+        given(credentialFactory.read(loginMethod.toString())).willReturn(user);
 
         // When
-        steps.iHaveAnEpicAccountVia(loginType.name());
+        steps.iHaveAnEpicAccountVia(loginMethod.toString());
 
         // Then
         then(userHolder).should().set(user);
@@ -73,7 +73,7 @@ public class EpicFreeGameBotStepsTest {
     @Test
     public void Can_verify_games_are_purchased() {
 
-        final List<String> games = asList(someString(), someString());
+        final List<java.lang.String> games = asList(someString(), someString());
 
         // Given
         given(gameList.get()).willReturn(games);
@@ -83,28 +83,6 @@ public class EpicFreeGameBotStepsTest {
 
         // Then
         then(gameList).should().get();
-    }
-
-    @Test(expected = PendingException.class)
-    public void Can_check_if_there_are_free_games() {
-
-        // Given
-
-        // When
-        steps.thereAreFreeGamesForThisWeek();
-
-        // Then
-    }
-
-    @Test(expected = PendingException.class)
-    public void Can_check_if_there_are_not_free_games() {
-
-        // Given
-
-        // When
-        steps.thereAreNotFreeGamesForThisWeek();
-
-        // Then
     }
 
     @Test

@@ -1,7 +1,5 @@
 package me.hax3.epic.step;
 
-import cucumber.api.PendingException;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,7 +7,6 @@ import me.hax3.epic.bot.EzyBot;
 import me.hax3.epic.factory.CredentialFactory;
 import me.hax3.epic.holder.EpicUserHolder;
 import me.hax3.epic.holder.GameListHolder;
-import me.hax3.epic.model.LoginType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,13 +33,7 @@ public class EpicFreeGameBotSteps {
 
     @Given("^I have an epic account via \"([^\"]*)\"$")
     public void iHaveAnEpicAccountVia(String loginType) {
-        userHolder.set(credentialFactory.read(LoginType.valueOf(loginType.toUpperCase())));
-    }
-
-    @And("There are free games for this week")
-    public void thereAreFreeGamesForThisWeek() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+        userHolder.set(credentialFactory.read(loginType));
     }
 
     @When("I ran this epic free games bot")
@@ -52,15 +43,9 @@ public class EpicFreeGameBotSteps {
 
     @Then("the games are acquired")
     public void theGamesAreAcquired() {
-        final List<String> listOfGame = gameList.get();
+        final List<java.lang.String> listOfGame = gameList.get();
         assertThat(listOfGame.size(), greaterThan(0));
         listOfGame.forEach(log::info);
-    }
-
-    @And("There are not free games for this week")
-    public void thereAreNotFreeGamesForThisWeek() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
     }
 
     @Then("do nothing")

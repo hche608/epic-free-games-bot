@@ -1,7 +1,6 @@
 package me.hax3.epic.page;
 
 import me.hax3.epic.model.GameStatus;
-import me.hax3.selenium.finders.Finders;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,15 +31,13 @@ import static shiver.me.timbers.data.random.RandomStrings.someString;
 public class GamePageTest {
 
     private WebDriver webDriver;
-    private Finders finders;
     private GamePage page;
 
     @Before
     public void setUp() {
         webDriver = mock(WebDriver.class);
-        finders = mock(Finders.class);
         mockStatic(ExpectedConditions.class);
-        page = new GamePage(webDriver, finders);
+        page = new GamePage(webDriver);
     }
 
     @Test
@@ -55,7 +52,8 @@ public class GamePageTest {
         when(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
         given(webDriver.getCurrentUrl()).willReturn("https://www.epicgames.com/store/en-US/product/conarium/home");
-        given(finders.findByText("span", "Free")).willReturn(discountWebElement);
+        given(webDriver.getCurrentUrl()).willReturn("https://www.epicgames.com/store/en-US/product/conarium/home");
+        given(webDriver.findElement(By.xpath("//span[text()='Free']"))).willReturn(discountWebElement);
         given(discountWebElement.getText()).willReturn("Free");
 
         given(webDriver.findElement(By.xpath("//span[text()='Free']/preceding-sibling::s"))).willReturn(priceWebElement);
@@ -86,7 +84,7 @@ public class GamePageTest {
         when(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
         given(webDriver.getCurrentUrl()).willReturn("https://www.epicgames.com/store/en-US/product/conarium/home");
-        given(finders.findByText("span", "Free")).willReturn(discountWebElement);
+        given(webDriver.findElement(By.xpath("//span[text()='Free']"))).willReturn(discountWebElement);
         given(discountWebElement.getText()).willReturn("Free");
 
         given(webDriver.findElement(By.xpath("//span[text()='Free']/preceding-sibling::s"))).willReturn(priceWebElement);
@@ -117,7 +115,7 @@ public class GamePageTest {
         when(visibilityOfElementLocated(By.xpath("//button//span[text()='Get' or text()='Owned']"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
         given(webDriver.getCurrentUrl()).willReturn("https://www.epicgames.com/store/en-US/product/conarium/home");
-        given(finders.findByText("span", "Free")).willReturn(discountWebElement);
+        given(webDriver.findElement(By.xpath("//span[text()='Free']"))).willReturn(discountWebElement);
         given(discountWebElement.getText()).willReturn(someString());
 
         given(webDriver.findElement(By.xpath("//span[text()='Free']/preceding-sibling::s"))).willReturn(priceWebElement);

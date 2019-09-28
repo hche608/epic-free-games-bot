@@ -31,19 +31,19 @@ public class CredentialFactoryTest {
     @Test
     public void Can_read_user_from_environment_variables() {
 
-        final LoginType loginType = someEnum(LoginType.class);
+        final String loginType = someEnum(LoginType.class).toString();
         final String username = someString();
         final String password = someString();
 
         // Given
-        given(usernameMap.get(loginType.name().toLowerCase())).willReturn(username);
-        given(passwordMap.get(loginType.name().toLowerCase())).willReturn(password);
+        given(usernameMap.get(loginType.toLowerCase())).willReturn(username);
+        given(passwordMap.get(loginType.toLowerCase())).willReturn(password);
 
         // When
         final EpicUser user = factory.read(loginType);
 
         // Then
-        assertThat(user.getLoginType(), is(loginType));
+        assertThat(user.getLoginType().toString(), is(loginType));
         assertThat(user.getUsername(), is(username));
         assertThat(user.getPassword(), is(password));
     }

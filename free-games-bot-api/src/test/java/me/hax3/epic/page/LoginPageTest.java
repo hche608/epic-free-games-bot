@@ -2,7 +2,6 @@ package me.hax3.epic.page;
 
 import me.hax3.epic.model.EpicUser;
 import me.hax3.epic.model.LoginType;
-import me.hax3.selenium.finders.Finders;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,15 +33,13 @@ import static shiver.me.timbers.data.random.RandomStrings.someString;
 public class LoginPageTest {
 
     private WebDriver webDriver;
-    private Finders finders;
     private LoginPage page;
 
     @Before
     public void setUp() {
         webDriver = mock(WebDriver.class);
-        finders = mock(Finders.class);
         mockStatic(ExpectedConditions.class);
-        page = new LoginPage(webDriver, finders);
+        page = new LoginPage(webDriver);
     }
 
     @Test
@@ -65,6 +62,7 @@ public class LoginPageTest {
         final String password = someString();
         final WebElement emailWebElement = mock(WebElement.class);
         final WebElement passwordWebElement = mock(WebElement.class);
+        final WebElement loginWebElement = mock(WebElement.class);
 
         // Given
         when(visibilityOfElementLocated(By.xpath("//form"))).thenReturn(webDriver_ -> mock(WebElement.class));
@@ -74,8 +72,9 @@ public class LoginPageTest {
         given(user.getLoginType()).willReturn(LoginType.EPIC);
         given(user.getUsername()).willReturn(username);
         given(user.getPassword()).willReturn(password);
-        given(finders.findById("email")).willReturn(emailWebElement);
-        given(finders.findById("password")).willReturn(passwordWebElement);
+        given(webDriver.findElement(By.id("email"))).willReturn(emailWebElement);
+        given(webDriver.findElement(By.id("password"))).willReturn(passwordWebElement);
+        given(webDriver.findElement(By.id("login"))).willReturn(loginWebElement);
         when(elementToBeClickable(By.id("login"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
         // When
@@ -84,7 +83,7 @@ public class LoginPageTest {
         // Then
         then(emailWebElement).should().sendKeys(username);
         then(passwordWebElement).should().sendKeys(password);
-        then(finders).should().clickById("login");
+        then(loginWebElement).should().click();
 
     }
 
@@ -97,6 +96,7 @@ public class LoginPageTest {
         final Set<String> windowHandles = Stream.of(parent, newWindow).collect(Collectors.toSet());
         final String username = someString();
         final String password = someString();
+        final WebElement loginWithFacebook = mock(WebElement.class);
         final WebElement emailWebElement = mock(WebElement.class);
         final WebElement passwordWebElement = mock(WebElement.class);
         final TargetLocator targetLocator = mock(TargetLocator.class);
@@ -111,20 +111,21 @@ public class LoginPageTest {
         given(user.getLoginType()).willReturn(LoginType.FACEBOOK);
         given(user.getUsername()).willReturn(username);
         given(user.getPassword()).willReturn(password);
+        given(webDriver.findElement(By.id("login-with-facebook"))).willReturn(loginWithFacebook);
         given(webDriver.getWindowHandles()).willReturn(windowHandles);
         given(webDriver.switchTo()).willReturn(targetLocator);
         when(elementToBeClickable(By.xpath("//div[@id='buttons']/label/input"))).thenReturn(webDriver_ -> mock(WebElement.class));
 
 
-        given(finders.findById("email")).willReturn(emailWebElement);
-        given(finders.findById("pass")).willReturn(passwordWebElement);
+        given(webDriver.findElement(By.id("email"))).willReturn(emailWebElement);
+        given(webDriver.findElement(By.id("pass"))).willReturn(passwordWebElement);
         given(webDriver.findElement(By.xpath("//div[@id='buttons']/label/input"))).willReturn(facebookLogin);
 
         // When
         page.loginWithDetail(user);
 
         // Then
-        then(finders).should().clickById("login-with-facebook");
+        then(loginWithFacebook).should().click();
         then(targetLocator).should().window(newWindow);
         then(emailWebElement).should().sendKeys(username);
         then(passwordWebElement).should().sendKeys(password);
@@ -139,6 +140,7 @@ public class LoginPageTest {
         final String parent = someString();
         final String newWindow = someString();
         final Set<String> windowHandles = Stream.of(parent).collect(Collectors.toSet());
+        final WebElement loginWithFacebook = mock(WebElement.class);
         final String username = someString();
         final String password = someString();
         final WebElement emailWebElement = mock(WebElement.class);
@@ -156,22 +158,13 @@ public class LoginPageTest {
         given(user.getUsername()).willReturn(username);
         given(user.getPassword()).willReturn(password);
         given(webDriver.getWindowHandles()).willReturn(windowHandles);
-
-
-//        given(webDriver.switchTo()).willReturn(targetLocator);
-//        when(elementToBeClickable(By.xpath("//div[@id='buttons']/label/input"))).thenReturn(webDriver_ -> mock(WebElement.class));
-//
-//
-//        given(finders.findById("email")).willReturn(emailWebElement);
-//        given(finders.findById("pass")).willReturn(passwordWebElement);
-//        given(webDriver.findElement(By.xpath("//div[@id='buttons']/label/input"))).willReturn(facebookLogin);
+        given(webDriver.findElement(By.id("login-with-facebook"))).willReturn(loginWithFacebook);
 
         // When
-//        final Throwable actual = catchThrowable(() -> page.loginWithDetail(user));
         page.loginWithDetail(user);
 
         // Then
-        then(finders).should().clickById("login-with-facebook");
+        then(loginWithFacebook).should().click();
         then(webDriver).should(never()).switchTo();
         then(facebookLogin).should(never()).click();
 
@@ -200,25 +193,31 @@ public class LoginPageTest {
     @Test
     public void Can_click_remember_me() {
 
+        final WebElement webElement = mock(WebElement.class);
+
         // Given
+        given(webDriver.findElement(By.xpath("//label[text()='Remember Me']"))).willReturn(webElement);
 
         // When
         page.clickRememberMe();
 
         // Then
-        then(finders).should().clickByText("label", "Remember Me");
+        then(webElement).should().click();
     }
 
     @Test
     public void Can_click_login() {
 
+        final WebElement login = mock(WebElement.class);
+
         // Given
         when(elementToBeClickable(By.id("login"))).thenReturn(webDriver_ -> mock(WebElement.class));
+        given(webDriver.findElement(By.id("login"))).willReturn(login);
 
         // When
         page.clickEpicLogin();
 
         // Then
-        then(finders).should().clickById("login");
+        then(login).should().click();
     }
 }

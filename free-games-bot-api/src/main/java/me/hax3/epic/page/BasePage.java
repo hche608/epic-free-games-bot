@@ -34,8 +34,9 @@ public class BasePage {
                 .build()
                 .perform();
         }
-        webDriverWait.until(elementToBeClickable(By.xpath("//span[text()='Sign In']")));
-        webDriver.findElement(By.xpath("//span[text()='Sign In']")).click();
+        final By xpath = By.xpath("//span[text()='Sign In']");
+        webDriverWait.until(elementToBeClickable(xpath));
+        webDriver.findElement(xpath).click();
     }
 
     public void clickStore() {

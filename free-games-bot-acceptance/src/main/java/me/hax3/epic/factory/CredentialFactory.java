@@ -1,7 +1,6 @@
 package me.hax3.epic.factory;
 
 import me.hax3.epic.model.EpicUser;
-import me.hax3.epic.model.LoginType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +18,7 @@ public class CredentialFactory {
         this.password = password;
     }
 
-    public EpicUser read(LoginType loginType) {
-        return new EpicUser(loginType, username.get(loginType.name().toLowerCase()), password.get(loginType.name().toLowerCase()));
+    public EpicUser read(String loginType) {
+        return new EpicUser(loginType, username.get(loginType.toLowerCase()), password.get(loginType.toLowerCase()));
     }
 }

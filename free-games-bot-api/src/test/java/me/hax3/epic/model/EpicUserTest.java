@@ -14,7 +14,7 @@ public class EpicUserTest {
     public void Can_create_an_epic_user() {
 
         // Given
-        final LoginType loginMethod = someEnum(LoginType.class);
+        final String loginMethod = someEnum(LoginType.class).toString();
         final String username = someString();
         final String password = someString();
 
@@ -22,9 +22,30 @@ public class EpicUserTest {
         final EpicUser actual = new EpicUser(loginMethod, username, password);
 
         // Then
-        assertThat(actual.getLoginType(), is(loginMethod));
+        assertThat(actual.getLoginType().toString(), is(loginMethod));
         assertThat(actual.getUsername(), is(username));
         assertThat(actual.getPassword(), is(password));
-        assertThat(actual.toString(), is(format("EpicUser{loginMethod='%s', username='%s'}", loginMethod, username)));
+        assertThat(actual.toString(), is(format("EpicUser{loginType=%s, username=%s, password=******}", loginMethod, username)));
+    }
+
+    @Test
+    public void Can_create_an_epic_user_with_setter() {
+
+        // Given
+        final String loginMethod = someEnum(LoginType.class).toString();
+        final String username = someString();
+        final String password = someString();
+
+        // When
+        final EpicUser actual = new EpicUser();
+        actual.setLoginType(loginMethod);
+        actual.setUsername(username);
+        actual.setPassword(password);
+
+        // Then
+        assertThat(actual.getLoginType().toString(), is(loginMethod));
+        assertThat(actual.getUsername(), is(username));
+        assertThat(actual.getPassword(), is(password));
+        assertThat(actual.toString(), is(format("EpicUser{loginType=%s, username=%s, password=******}", loginMethod, username)));
     }
 }
