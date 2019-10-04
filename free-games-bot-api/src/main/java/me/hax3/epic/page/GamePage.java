@@ -29,7 +29,12 @@ public class GamePage extends BasePage {
     }
 
     public int getNumberOfFreeGame() {
-        webDriverWait.until(numberOfElementsToBeMoreThan(By.xpath("//a//span[text()='Free']"), 0));
+        try {
+            webDriverWait.withTimeout(Duration.ofSeconds(5)).until(numberOfElementsToBeMoreThan(By.xpath("//a//span[text()='Free']"), 0));
+        } catch (TimeoutException e) {
+            log.info("Only one game available for this week.");
+            return 1;
+        }
         return webDriver.findElements(By.xpath("//a//span[text()='Free']")).size();
     }
 

@@ -157,7 +157,7 @@ public class GamePageTest {
         final WebElement webElement = mock(WebElement.class);
         final List<WebElement> elements = asList(mock(WebElement.class), webElement);
         given(webDriver.findElements(By.xpath("//a//span[text()='Free']"))).willReturn(elements);
-        elements.get(index);
+
         // When
         page.clickFree(index);
 
@@ -181,6 +181,19 @@ public class GamePageTest {
 
         // Then
         assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void Can_get_number_of_free_games_if_it_timeout() {
+
+        // Given
+        when(numberOfElementsToBeMoreThan(By.xpath("//a//span[text()='Free']"), 0)).thenReturn(webDriver1 -> null);
+
+        // When
+        final int actual = page.getNumberOfFreeGame();
+
+        // Then
+        assertThat(actual, is(1));
     }
 
     @Test
