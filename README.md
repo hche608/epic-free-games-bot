@@ -18,12 +18,19 @@ Also this is a tutorial to show BDD and TDD by using (spring, spring-boot, selen
 * ~~login-with-epic~~
 * ~~find latest free game from epic~~
 * ~~checkout the free game~~ (need to verify)
-* implement aws lambda with layer of headless chrome and selenium.
+* ~~implement aws lambda with layer of headless chrome and selenium.~~
 * ~~support login-with-facebook~~
+* create aws cloudformation templates
+* build an stand-alone jar
+* create github workflow to build and deploy aws lambda
+* create github workflow to invoke aws lambda on schedule-based time expresion
 * support login-with-google
 * support login-with-psn
 * support login-with-xbl
 * support login-with-nintendo
+
+## FYI
+headless chrome(v78) and chromedriver(v78) for linux are under /bin folder
 
 ## Test
 ```shell script
