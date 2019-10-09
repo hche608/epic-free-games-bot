@@ -27,6 +27,7 @@
         <module>free-games-bot-api</module>
         <module>free-games-bot-acceptance</module>
         <module>free-games-bot-aws-lambda</module>
+        <module>free-games-bot-spring-aws-lambda</module>
     </modules>
 
     <repositories>
