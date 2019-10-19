@@ -1,13 +1,36 @@
-sudo: false
+dist: xenial
 language: java
-services:
-- docker
+jdk: openjdk8
+
+addons:
+  chrome: stable
+  apt:
+    packages:
+      - chromium-chromedriver
+  sonarcloud:
+    organization: "hche608-github"
+    token:
+      secure: "${sonar}"
+
 cache:
   directories:
-  - '$HOME/.m2/repository'
-  - '$HOME/.sonar'
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar'
 
-script: "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar \
-           -Dsonar.organization=hche608-github \
-           -Dsonar.host.url=https://sonarcloud.io \
-           -Dsonar.login=${sonar}"
+before_install:
+  - java -version
+  - google-chrome --version
+  - chromedriver --version
+
+script:
+  - mvn clean verify sonar:sonar
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+deploy:
+  provider: script
+  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy -DskipTests"
+  skip_cleanup: true
+  on:
+    tags: true

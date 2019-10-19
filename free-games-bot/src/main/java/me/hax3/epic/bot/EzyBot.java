@@ -66,6 +66,14 @@ public class EzyBot {
             afterPlaceOrderPage.waitForThankYouForBuying();
             return gameStatus.getName();
         } else {
+            while(gamePage.getNumberOfAddons() > 0){
+                gamePage.clickGetAddon();
+                checkOutPage.clickPlaceOrder();
+                afterPlaceOrderPage.waitForThankYouForBuying();
+                homePage.clickStore();
+                homePage.clickStoreFreeGames();
+            }
+
             return gameStatus.getName() + " is owned.";
         }
     }

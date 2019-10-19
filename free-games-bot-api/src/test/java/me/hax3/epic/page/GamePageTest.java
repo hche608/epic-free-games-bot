@@ -24,6 +24,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfElements
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static shiver.me.timbers.data.random.RandomIntegers.someInteger;
+import static shiver.me.timbers.data.random.RandomIntegers.someIntegerGreaterThan;
 import static shiver.me.timbers.data.random.RandomStrings.someString;
 
 @RunWith(PowerMockRunner.class)
@@ -150,6 +151,24 @@ public class GamePageTest {
     }
 
     @Test
+    public void Can_click_get_button_if_more_get_button_presented() {
+
+        final WebElement button = mock(WebElement.class);
+
+        // Given
+        final List elements = mock(List.class);
+        given(webDriver.findElements(By.xpath("//button//span[text()='Get']/../.."))).willReturn(elements);
+        given(elements.size()).willReturn(someIntegerGreaterThan(1));
+        given(webDriver.findElement(By.xpath("//div[@id=\"editions\"]/following-sibling::*//button//span[text()='Get']/../.."))).willReturn(button);
+
+        // When
+        page.clickGet();
+
+        // Then
+        then(button).should().click();
+    }
+
+    @Test
     public void Can_click_free_element_by_index() {
 
         final int index = 1;
@@ -226,5 +245,35 @@ public class GamePageTest {
 
         // Then
         then(webDriver).shouldHaveZeroInteractions();
+    }
+
+    @Test
+    public void Can_click_get_addon() {
+
+        // Given
+        final WebElement webElement = mock(WebElement.class);
+        given(webDriver.findElement(By.xpath("//button//span[text()='Get']/../.."))).willReturn(webElement);
+
+        // When
+        page.clickGetAddon();
+
+        // Then
+        then(webElement).should().click();
+    }
+
+    @Test
+    public void Can_get_number_of_addons() {
+
+        // Given
+        final List elements = mock(List.class);
+        given(webDriver.findElements(By.xpath("//button//span[text()='Get']/../.."))).willReturn(elements);
+        final Integer expected = someInteger();
+        given(elements.size()).willReturn(expected);
+
+        // When
+        final int actual = page.getNumberOfAddons();
+
+        // Then
+        assertThat(actual, is(expected));
     }
 }

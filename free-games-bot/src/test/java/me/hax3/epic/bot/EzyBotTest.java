@@ -26,7 +26,7 @@ public class EzyBotTest {
     private LoginPage loginPage;
     private HomePage homePage;
     private GamePage gamePage;
-    private CheckOutPage checkOutagePage;
+    private CheckOutPage checkOutPage;
     private EzyBot ezyBot;
     private AfterPlaceOrderPage afterPlaceOrderPage;
 
@@ -35,9 +35,9 @@ public class EzyBotTest {
         loginPage = mock(LoginPage.class);
         homePage = mock(HomePage.class);
         gamePage = mock(GamePage.class);
-        checkOutagePage = mock(CheckOutPage.class);
+        checkOutPage = mock(CheckOutPage.class);
         afterPlaceOrderPage = mock(AfterPlaceOrderPage.class);
-        ezyBot = new EzyBot(loginPage, homePage, gamePage, checkOutagePage, afterPlaceOrderPage);
+        ezyBot = new EzyBot(loginPage, homePage, gamePage, checkOutPage, afterPlaceOrderPage);
     }
 
     @Test
@@ -64,8 +64,44 @@ public class EzyBotTest {
         then(gamePage).should().getNumberOfFreeGame();
         then(gamePage).should().getStatus();
         then(gamePage).should().clickGet();
-        then(checkOutagePage).should().clickPlaceOrder();
+        then(checkOutPage).should().clickPlaceOrder();
         then(afterPlaceOrderPage).should().waitForThankYouForBuying();
+        assertThat(actual.size(), is(numberOfGame));
+    }
+
+    @Test
+    public void can_get_a_free_game_with_addons() {
+
+        final EpicUser epicUser = mock(EpicUser.class);
+        final GameStatus gameStatus = mock(GameStatus.class);
+        final int numberOfGame = 1;
+        final int numberOfAddons = 1;
+
+        // Given
+        given(gamePage.getNumberOfFreeGame()).willReturn(numberOfGame);
+        given(gamePage.getStatus()).willReturn(gameStatus);
+        given(gameStatus.isDiscount()).willReturn(true);
+        given(gameStatus.isOwned()).willReturn(true);
+        given(gamePage.getNumberOfAddons()).willReturn(numberOfAddons, 0);
+
+        // When
+        final List<String> actual = ezyBot.getGames(epicUser);
+
+        // Then
+        then(homePage).should().visit();
+        then(homePage).should().clickSignIn();
+        then(loginPage).should().loginWithDetail(epicUser);
+        then(homePage).should(times(2)).clickStoreFreeGames();
+        then(gamePage).should().getNumberOfFreeGame();
+        then(gamePage).should().getStatus();
+        then(gamePage).should().clickGetAddon();
+        then(checkOutPage).should().clickPlaceOrder();
+        then(afterPlaceOrderPage).should().waitForThankYouForBuying();
+        then(homePage).should().clickStore();
+        then(homePage).shouldHaveNoMoreInteractions();
+        then(loginPage).shouldHaveNoMoreInteractions();
+        then(checkOutPage).shouldHaveNoMoreInteractions();
+        then(afterPlaceOrderPage).shouldHaveNoMoreInteractions();
         assertThat(actual.size(), is(numberOfGame));
     }
 
@@ -100,7 +136,7 @@ public class EzyBotTest {
         then(gamePage).should().clickFree(0);
         then(gamePage).should(times(2)).getStatus();
         then(gamePage).should(times(numberOfGame)).clickGet();
-        then(checkOutagePage).should(times(numberOfGame)).clickPlaceOrder();
+        then(checkOutPage).should(times(numberOfGame)).clickPlaceOrder();
         then(afterPlaceOrderPage).should(times(numberOfGame)).waitForThankYouForBuying();
         then(gamePage).should().clickFree(1);
         assertThat(actual.size(), is(numberOfGame));
@@ -127,7 +163,7 @@ public class EzyBotTest {
         then(homePage).should().clickStoreFreeGames();
         then(gamePage).should().getStatus();
         then(gamePage).should(never()).clickGet();
-        then(checkOutagePage).shouldHaveZeroInteractions();
+        then(checkOutPage).shouldHaveZeroInteractions();
 
         assertThat(actual.size(), greaterThan(0));
     }
@@ -153,7 +189,7 @@ public class EzyBotTest {
         then(homePage).should().clickStoreFreeGames();
         then(gamePage).should().getStatus();
         then(gamePage).should(never()).clickGet();
-        then(checkOutagePage).shouldHaveZeroInteractions();
+        then(checkOutPage).shouldHaveZeroInteractions();
 
         assertThat(actual.size(), greaterThan(0));
     }

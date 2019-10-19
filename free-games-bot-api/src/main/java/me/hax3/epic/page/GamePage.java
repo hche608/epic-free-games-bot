@@ -17,6 +17,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 @Component
 public class GamePage extends BasePage {
 
+    private static final String XPATH_OF_GET_BUTTON = "//button//span[text()='Get']/../..";
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final WebDriver webDriver;
@@ -48,7 +49,13 @@ public class GamePage extends BasePage {
     }
 
     public void clickGet() {
-        webDriver.findElement(By.xpath("//button//span[text()='Get']/../..")).click();
+        final String getButton = XPATH_OF_GET_BUTTON;
+        if (webDriver.findElements(By.xpath(getButton)).size() > 1) {
+            webDriver.findElement(By.xpath("//div[@id=\"editions\"]/following-sibling::*//button//span[text()='Get']/../.."))
+                .click();
+        } else {
+            webDriver.findElement(By.xpath(getButton)).click();
+        }
     }
 
     private String parseGameName(String url) {
@@ -79,5 +86,13 @@ public class GamePage extends BasePage {
         } catch (TimeoutException e) {
             log.info("Continue button is not presented");
         }
+    }
+
+    public void clickGetAddon() {
+        webDriver.findElement(By.xpath(XPATH_OF_GET_BUTTON)).click();
+    }
+
+    public int getNumberOfAddons() {
+        return webDriver.findElements(By.xpath(XPATH_OF_GET_BUTTON)).size();
     }
 }
