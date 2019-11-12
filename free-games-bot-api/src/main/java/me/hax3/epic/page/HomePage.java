@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfElementsToBeMoreThan;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 @Component
 public class HomePage extends BasePage {
@@ -24,7 +25,12 @@ public class HomePage extends BasePage {
         webDriver.get("https://www.epicgames.com/store");
     }
 
-    public void clickStoreFreeGames() {
+    public void clickFreeGamesCollection() {
+        webDriverWait.until(visibilityOfElementLocated(By.xpath("//a[contains(@href, '/store/en-US/collection/free-games-collection')]")));
+        webDriver.findElement(By.xpath("//a[contains(@href, '/store/en-US/collection/free-games-collection')]")).click();
+    }
+
+    public void clickFreeGames() {
         webDriverWait.until(numberOfElementsToBeMoreThan(By.id("freeGames"), 0));
         webDriver.findElement(By.xpath("//div[@id='freeGames']/following-sibling::*[2]/div/a")).click();
     }

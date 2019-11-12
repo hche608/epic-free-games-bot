@@ -55,7 +55,7 @@ public class HomePageTest {
         given(webDriver.findElement(By.xpath("//div[@id='freeGames']/following-sibling::*[2]/div/a"))).willReturn(webElement);
 
         // When
-        page.clickStoreFreeGames();
+        page.clickFreeGames();
 
         // Then
         then(webElement).should().click();
