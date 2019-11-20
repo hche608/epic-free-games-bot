@@ -23,7 +23,8 @@ before_install:
   - chromedriver --version
 
 script:
-  - mvn clean verify sonar:sonar
+#  - mvn clean verify sonar:sonar
+  - mvn clean package sonar:sonar
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)

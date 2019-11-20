@@ -60,7 +60,8 @@ public class EzyBotTest {
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
         then(loginPage).should().loginWithDetail(epicUser);
-        then(homePage).should().clickFreeGames();
+        then(homePage).should().clickFreeGamesCollection();
+//        then(homePage).should().clickFreeGames();
         then(gamePage).should().getNumberOfFreeGame();
         then(gamePage).should().getStatus();
         then(gamePage).should().clickGet();
@@ -91,7 +92,8 @@ public class EzyBotTest {
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
         then(loginPage).should().loginWithDetail(epicUser);
-        then(homePage).should(times(2)).clickFreeGames();
+        then(homePage).should(times(2)).clickFreeGamesCollection();
+//        then(homePage).should(times(2)).clickFreeGames();
         then(gamePage).should().getNumberOfFreeGame();
         then(gamePage).should().getStatus();
         then(gamePage).should().clickGetAddon();
@@ -131,7 +133,8 @@ public class EzyBotTest {
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
         then(loginPage).should().loginWithDetail(epicUser);
-        then(homePage).should(times(numberOfGame + 1)).clickFreeGames();
+        then(homePage).should(times(numberOfGame + 1)).clickFreeGamesCollection();
+//        then(homePage).should(times(numberOfGame + 1)).clickFreeGames();
         then(gamePage).should().getNumberOfFreeGame();
         then(gamePage).should().clickFree(0);
         then(gamePage).should(times(2)).getStatus();
@@ -160,7 +163,8 @@ public class EzyBotTest {
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
         then(loginPage).should().loginWithDetail(epicUser);
-        then(homePage).should().clickFreeGames();
+        then(homePage).should().clickFreeGamesCollection();
+//        then(homePage).should().clickFreeGames();
         then(gamePage).should().getStatus();
         then(gamePage).should(never()).clickGet();
         then(checkOutPage).shouldHaveZeroInteractions();
@@ -186,7 +190,8 @@ public class EzyBotTest {
         then(homePage).should().visit();
         then(homePage).should().clickSignIn();
         then(loginPage).should().loginWithDetail(epicUser);
-        then(homePage).should().clickFreeGames();
+        then(homePage).should().clickFreeGamesCollection();
+//        then(homePage).should().clickFreeGames();
         then(gamePage).should().getStatus();
         then(gamePage).should(never()).clickGet();
         then(checkOutPage).shouldHaveZeroInteractions();

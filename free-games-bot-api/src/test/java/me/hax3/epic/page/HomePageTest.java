@@ -17,6 +17,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfElementsToBeMoreThan;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith(PowerMockRunner.class)
@@ -43,6 +44,22 @@ public class HomePageTest {
 
         // Then
         then(webDriver).should().get("https://www.epicgames.com/store");
+    }
+
+    @Test
+    public void Can_click_free_game_collection() {
+
+        final WebElement webElement = mock(WebElement.class);
+
+        // Given
+        when(visibilityOfElementLocated(By.xpath("//a[contains(@href, '/store/en-US/collection/free-game-collection')]"))).thenReturn(webDriver1 -> mock(WebElement.class));
+        given(webDriver.findElement(By.xpath("//a[contains(@href, '/store/en-US/collection/free-game-collection')]"))).willReturn(webElement);
+
+        // When
+        page.clickFreeGamesCollection();
+
+        // Then
+        then(webElement).should().click();
     }
 
     @Test

@@ -26,8 +26,8 @@ public class HomePage extends BasePage {
     }
 
     public void clickFreeGamesCollection() {
-        webDriverWait.until(visibilityOfElementLocated(By.xpath("//a[contains(@href, '/store/en-US/collection/free-games-collection')]")));
-        webDriver.findElement(By.xpath("//a[contains(@href, '/store/en-US/collection/free-games-collection')]")).click();
+        webDriverWait.until(visibilityOfElementLocated(By.xpath("//a[contains(@href, '/store/en-US/collection/free-game-collection')]")));
+        webDriver.findElement(By.xpath("//a[contains(@href, '/store/en-US/collection/free-game-collection')]")).click();
     }
 
     public void clickFreeGames() {
