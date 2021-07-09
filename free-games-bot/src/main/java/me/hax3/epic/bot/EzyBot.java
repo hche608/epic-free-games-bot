@@ -40,8 +40,8 @@ public class EzyBot {
         log.info("clicked sign in");
         loginPage.loginWithDetail(epicUser);
         log.info("logged in");
-        homePage.clickFreeGamesCollection();
-//        homePage.clickFreeGames();
+//        homePage.clickFreeGamesCollection();
+        homePage.clickFreeNow();
         log.info("looking for games");
         final ArrayList<String> games = new ArrayList<>();
         final int numberOfFreeGame = gamePage.getNumberOfFreeGame();
@@ -50,8 +50,8 @@ public class EzyBot {
                 gamePage.clickFree(i);
                 games.add(getGame());
                 homePage.clickStore();
-                homePage.clickFreeGamesCollection();
-//                homePage.clickFreeGames();
+//                homePage.clickFreeGamesCollection();
+                homePage.clickFreeNow();
             }
         } else {
             games.add(getGame());
@@ -68,13 +68,13 @@ public class EzyBot {
             afterPlaceOrderPage.waitForThankYouForBuying();
             return gameStatus.getName();
         } else {
-            while(gamePage.getNumberOfAddons() > 0){
+            while (gamePage.getNumberOfAddons() > 0) {
                 gamePage.clickGetAddon();
                 checkOutPage.clickPlaceOrder();
                 afterPlaceOrderPage.waitForThankYouForBuying();
                 homePage.clickStore();
-                homePage.clickFreeGamesCollection();
-//                homePage.clickFreeGames();
+//                homePage.clickFreeGamesCollection();
+                homePage.clickFreeNow();
             }
 
             return gameStatus.getName() + " is owned.";

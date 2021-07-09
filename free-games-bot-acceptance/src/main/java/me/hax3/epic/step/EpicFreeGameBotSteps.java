@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 public class EpicFreeGameBotSteps {
 
@@ -44,7 +44,7 @@ public class EpicFreeGameBotSteps {
     @Then("the games are acquired")
     public void theGamesAreAcquired() {
         final List<String> listOfGame = gameList.get();
-        assertThat(listOfGame.size(), greaterThan(0));
+        assertThat("Purchased some games.", listOfGame.isEmpty());
         listOfGame.forEach(log::info);
     }
 

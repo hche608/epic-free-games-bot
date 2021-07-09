@@ -11,12 +11,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfElementsToBeMoreThan;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
@@ -63,16 +61,16 @@ public class HomePageTest {
     }
 
     @Test
-    public void Can_click_free_game() {
+    public void Can_click_free_now() {
 
         final WebElement webElement = mock(WebElement.class);
 
         // Given
-        when(numberOfElementsToBeMoreThan(By.id("freeGames"), 0)).thenReturn(webDriver_ -> anyList());
-        given(webDriver.findElement(By.xpath("//div[@id='freeGames']/following-sibling::*[2]/div/a"))).willReturn(webElement);
+        when(visibilityOfElementLocated(By.xpath("//a[contains(@aria-label,'Free Now')]"))).thenReturn(webDriver1 -> mock(WebElement.class));
+        given(webDriver.findElement(By.xpath("//a[contains(@aria-label,'Free Now')]"))).willReturn(webElement);
 
         // When
-        page.clickFreeGames();
+        page.clickFreeNow();
 
         // Then
         then(webElement).should().click();
